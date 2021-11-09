@@ -6,10 +6,10 @@ echo "Data Retrieving..."
 year=`date -d 'yesterday' +%Y`
 month=`date -d 'yesterday' +%m`
 day=`date -d 'yesterday' +%d`
-script_path="/home/emery/ndt/script_ndt_auto_report/"
-path="/home/emery/ndt/ndt-server/datadir/ndt7"
-log_file="/home/emery/ndt/script_ndt_auto_report/Daily_Report.log"
-wdr="/tmp/ndt14QRT589YUSD695LPOKIJSDDFytr/"
+script_path="/home/emery/ndt/script_ndt_auto_report/"   			## Specify  script_ndt_auto_report path
+path="/home/emery/ndt/ndt-server/datadir/ndt7"  					## Specify ndt7 datadir path
+log_file="/home/emery/ndt/script_ndt_auto_report/Daily_Report.log"  ## Specify log file 
+wdr="/tmp/ndt14QRT589YUSD695LPOKIJSDDFytr/"							## Specify temporaly file
 header=""
 
 cd $script_path
