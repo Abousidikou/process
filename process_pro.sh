@@ -41,7 +41,7 @@ if [[ $1 == "setup" ]]; then
 	python3 process_pro.py "setup"
 	echo -e "Database Set  \n\n\n" | tee --append $log_file
 	
-elif
+else
 	### Header
 	header="$year-$month-$day Report..."
 	if [[ $# == 2 ]]; then
