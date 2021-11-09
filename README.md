@@ -29,4 +29,5 @@ PATH=/usr/bin:/usr:/home/"path to script_ndt_auto_report file"
 0 1 * * * process_pro.sh "report" 
 ```
 
+## If there are file before setting of this automatic save, you can use process_all_pro.sh to save all
 ## Replace every line in process_pro.sh, process_pro.py and process_all_pro.sh  by the exact informations according to your work environment
