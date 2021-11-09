@@ -36,94 +36,97 @@ else
 	exit
 fi
 
-
-### Header
-header="$year-$month-$day Report..."
-if [[ $# == 2 ]]; then
-	header="$year-$month-$2 Report..."	
-fi
-echo  $header
-echo  $header >> $log_file
-## Check path or return
-
-if [ ! -d $path ]
-then
-	echo $path
-	echo "No test was made "
-	echo -e "No test was made  \n\n\n" >> $log_file
-	exit
-fi
-
-echo "Directoty: "$path
-echo "Directoty: "$path >> $log_file
-
-## Creating tmp file tmp/ndt
-
-if [ ! -d $wdr ]
-then
-	mkdir $wdr
-	echo  "Creation of directory $wdr" >> $log_file
-else
-	rm -r $wdr
-	mkdir $wdr
-	echo "Creation of directory $wdr " >> $log_file
-fi
-
-
-## Copy file into tmp/ndt directory
-
-for file in `ls $path`;
-do
-	extension=`echo $file | rev | cut -d'.' -f1 | rev`
-	if [[ $file != "zip" && $file != "unzip" ]]; then
-		echo  "Copying  $path$file " | tee --append $log_file
-		cp $path$file  $wdr
-	fi
-done
-
-
-## Gzipping decompressing file
-for file in `ls $wdr`; do
-	extension=`echo $file | rev | cut -d'.' -f1 | rev`
-	if [[ $extension == "gz" ]]; then
-		echo  "Dezipping  $wdr$file " | tee --append $log_file
-		gzip -d $wdr$file
-	fi
-done
-
-
-## Start getting Data
-
 if [[ $1 == "setup" ]]; then
 	echo  "Setting Database..." | tee --append $log_file
 	python3 process_pro.py "setup"
 	echo -e "Database Set  \n\n\n" | tee --append $log_file
-fi
+	
+elif
+	### Header
+	header="$year-$month-$day Report..."
+	if [[ $# == 2 ]]; then
+		header="$year-$month-$2 Report..."	
+	fi
+	echo  $header
+	echo  $header >> $log_file
+	## Check path or return
 
-if [[ $1 == "report" ]]; then
-	echo  "Daily push into database..." | tee --append $log_file
-	for file in `ls $wdr`;
+	if [ ! -d $path ]
+	then
+		echo $path
+		echo "No test was made "
+		echo -e "No test was made  \n\n\n" >> $log_file
+		exit
+	fi
+
+
+	echo "Directoty: "$path
+	echo "Directoty: "$path >> $log_file
+
+	## Creating tmp file tmp/ndt
+
+	if [ ! -d $wdr ]
+	then
+		mkdir $wdr
+		echo  "Creation of directory $wdr" >> $log_file
+	else
+		rm -r $wdr
+		mkdir $wdr
+		echo "Creation of directory $wdr " >> $log_file
+	fi
+
+
+	## Copy file into tmp/ndt directory
+
+	for file in `ls $path`;
 	do
-		if [[ $file != "zip" ]]; then
-			echo  "Processing  $file " | tee --append $log_file
-			python3 process_pro.py $wdr$file
-			echo "Processing of  $file finished" | tee --append $log_file
+		extension=`echo $file | rev | cut -d'.' -f1 | rev`
+		if [[ $file != "zip" && $file != "unzip" ]]; then
+			echo  "Copying  $path$file " | tee --append $log_file
+			cp $path$file  $wdr
 		fi
 	done
-	# dayly Statistic
-	echo "Daily stat... " | tee --append $log_file
-	if [[ $# == 2 ]]; then
-		python3 process_pro.py "dayStat" $year $month $2
-	else
-		python3 process_pro.py "dayStat" $year $month $day
-	fi 
-	echo "Daily stat finished" | tee --append $log_file
+
+
+	## Gzipping decompressing file
+	for file in `ls $wdr`; do
+		extension=`echo $file | rev | cut -d'.' -f1 | rev`
+		if [[ $extension == "gz" ]]; then
+			echo  "Dezipping  $wdr$file " | tee --append $log_file
+			gzip -d $wdr$file
+		fi
+	done
+
+
+	## Start getting Data
+
+	if [[ $1 == "report" ]]; then
+		echo  "Daily push into database..." | tee --append $log_file
+		for file in `ls $wdr`;
+		do
+			if [[ $file != "zip" ]]; then
+				echo  "Processing  $file " | tee --append $log_file
+				python3 process_pro.py $wdr$file
+				echo "Processing of  $file finished" | tee --append $log_file
+			fi
+		done
+		# dayly Statistic
+		echo "Daily stat... " | tee --append $log_file
+		if [[ $# == 2 ]]; then
+			python3 process_pro.py "dayStat" $year $month $2
+		else
+			python3 process_pro.py "dayStat" $year $month $day
+		fi 
+		echo "Daily stat finished" | tee --append $log_file
+	fi
+
+
+
+
+	## sleep 5
+	echo "Deletion of directory  $wdr" | tee --append $log_file
+	rm -r $wdr
+	echo -e  "End of today's report  $wdr \n\n\n" | tee --append $log_file
 fi
 
 
-
-
-## sleep 5
-echo "Deletion of directory  $wdr" | tee --append $log_file
-rm -r $wdr
-echo -e  "End of today's report  $wdr \n\n\n" | tee --append $log_file
