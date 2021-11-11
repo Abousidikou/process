@@ -5,7 +5,8 @@
 git clone https://github.com/Abousidikou/script_ndt_auto_report.git && cd script_ndt_auto_report
 ```
 
-## Replace every line in process_pro.sh, process_pro.py and process_all_pro.sh  by the exact informations according to your work environment
+## Edit files
+Replace every line in process_pro.sh, process_pro.py and process_all_pro.sh  by the exact informations according to your work environment
 
 
 ## Set Database in mysql
