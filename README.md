@@ -23,7 +23,7 @@ Fill default table like Country,City ...
 
 ## Configure cron for automatic save into database
 
-Set cron path
+Edit cron file
 ```bash
 crontab -e	
 ```
