@@ -457,7 +457,7 @@ def get_Day_Test_Number(dateFormed,loc):
 	    connection = Connect()
 	    if connection.is_connected():
 	        cursor = connection.cursor()
-	        if typ == "national":
+	        if loc == "national":
 	        	sql_insert_blob_query = """ SELECT * FROM Tests where Test_Date='"""+d+"""' and Test_Country_id='59' """
 	        else:
 	        	sql_insert_blob_query = """ SELECT * FROM Tests where Test_Date='"""+d+"""' and Test_Country_id!='59' """
@@ -466,7 +466,6 @@ def get_Day_Test_Number(dateFormed,loc):
 	        record = cursor.fetchall()
 	        print("Total number of rows in table: ", cursor.rowcount)
 	        for row in record:
-	        	print("row:",row)
 	        	if row[2] == 'Download':
 	        		d_num += 1
 	        	else:
@@ -964,6 +963,7 @@ print(url)
 http = urllib3.PoolManager()
 response = http.request('GET',url)
 m_bin = response.data
+print("m_bin:",m_bin)
 my_ip_data = json.loads(m_bin.decode('utf8'))
 print(my_ip_data)
 asSplitted = my_ip_data['as'].split()
