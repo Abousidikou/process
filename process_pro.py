@@ -100,10 +100,10 @@ def mysq_version():
 
 
 def Connect():
-	connection = mysql.connector.connect(host='localhost',
+	connection = mysql.connector.connect(host='localhost', ## Change Credential
 										database='monitorDB',
 										user='root',
-										password='Emery@123456789')
+										password='Emes@@2021')
 	return connection
 
 
