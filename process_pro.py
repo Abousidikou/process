@@ -1071,7 +1071,7 @@ city_id = get_id_from_table('City','City_Name',my_ip_data['city'])
 
 
 
-print("bbr Data:"bbr_data)
+print("bbr Data:",bbr_data)
 lev = get_service_level(bbr_data[0][0],)
 print("lev",lev)
 Test_Service_id =  get_id_from_table('Service','Service_level',lev)
