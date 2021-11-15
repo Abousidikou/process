@@ -13,7 +13,7 @@ from os.path import isfile, join
 print("Starting...")
 ## Preparing redirection
 orig_stdout = sys.stdout
-process = open('/home/emery/ndt/script_ndt_auto_report/Insertion.log.txt', 'a')  ## Specify Log file path
+process = open('/home/emes/ndt/script_ndt_auto_report/Insertion.log.txt', 'a')  ## Specify Log file path
 sys.stdout = process
 
 
