@@ -855,6 +855,7 @@ if option == "dayStat":
 		sys.exit()
 	print("Record:",record)
 	dayRecord = get_day_Record(record,"Download","national")
+	print("DayRecord: ",dayRecord)
 	if dayRecord == None:
 		sys.exit()
 	print("Start Insertion of Daily Record.")
@@ -868,6 +869,7 @@ if option == "dayStat":
 		sys.exit()
 	print("Record:",record)
 	dayRecord = get_day_Record(record,"Upload","national")
+	print("DayRecord: ",dayRecord)
 	if dayRecord == None:
 		sys.exit()
 	print("Start Insertion of Daily Record.")
@@ -888,6 +890,7 @@ if option == "dayStat":
 	if record == []:
 		sys.exit()
 	dayRecord = get_day_Record(record,"Download","international")
+	print("DayRecord: ",dayRecord)
 	if dayRecord == None:
 		sys.exit()
 	print("Start Insertion of International Daily Record.")
@@ -900,6 +903,7 @@ if option == "dayStat":
 	if record == []:
 		sys.exit()
 	dayRecord = get_day_Record(record,"Upload","international")
+	print("DayRecord: ",dayRecord)
 	if dayRecord == None:
 		sys.exit()
 	print("Start Insertion of International Daily Record.")
