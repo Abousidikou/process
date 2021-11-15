@@ -1046,7 +1046,7 @@ print("Getting Location Ids")
 
 ##Country
 country_id = get_id_from_table('Country','Country_Name',my_ip_data['country'])
-print(country_id)
+print("Country_id:",country_id)
 if country_id == None:
 	print("Country is None: "+my_ip_data['country'])
 	insert_into_Country(my_ip_data['country'])
@@ -1054,7 +1054,7 @@ country_id = get_id_from_table('Country','Country_Name',my_ip_data['country'])
 
 ## Region
 region_id = get_id_from_table('Region','Region_Name',my_ip_data['regionName'].split()[0])
-print(region_id)
+print("Region_id: ",region_id)
 if region_id == None:
 	print("Region is None: "+my_ip_data['regionName'])
 	insert_into_Region((my_ip_data['regionName'].split()[0],str(country_id)))
@@ -1062,6 +1062,7 @@ region_id = get_id_from_table('Region','Region_Name',my_ip_data['regionName'].sp
 
 ##City
 city_id = get_id_from_table('City','City_Name',my_ip_data['city'])
+print("City_id: ",region_id)
 if city_id == None:
 	print("City is None: "+my_ip_data['city'])
 	insert_into_City((my_ip_data['city'],str(region_id)))
@@ -1070,7 +1071,7 @@ city_id = get_id_from_table('City','City_Name',my_ip_data['city'])
 
 
 
-print(bbr_data)
+print("bbr Data:"bbr_data)
 lev = get_service_level(bbr_data[0][0],)
 print("lev",lev)
 Test_Service_id =  get_id_from_table('Service','Service_level',lev)
