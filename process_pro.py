@@ -959,13 +959,13 @@ print("Data getted...")
 ### Provider process
 print("Provider Process-Searching about IPInfo...")
 url = 'http://ip-api.com/json/'+ClientIP
-print(url)
+print("url:",url)
 http = urllib3.PoolManager()
 response = http.request('GET',url)
 m_bin = response.data
 print("m_bin:",m_bin)
 my_ip_data = json.loads(m_bin.decode('utf8'))
-print(my_ip_data)
+print("my_ip_data:",my_ip_data)
 asSplitted = my_ip_data['as'].split()
 asnum = asSplitted[0]
 asname = my_ip_data['as'][len(asnum)+1:]
