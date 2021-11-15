@@ -466,6 +466,7 @@ def get_Day_Test_Number(dateFormed,loc):
 	        record = cursor.fetchall()
 	        print("Total number of rows in table: ", cursor.rowcount)
 	        for row in record:
+	        	print("row:",row)
 	        	if row[2] == 'Download':
 	        		d_num += 1
 	        	else:
@@ -502,6 +503,7 @@ def get_day_Record(record,t,loc):
 	
 	dateFormed = date(int(sys.argv[2]),int(sys.argv[3]),int(sys.argv[4])).strftime("%Y-%m-%d")
 	test = get_Day_Test_Number(dateFormed,loc)
+	print("Test:",test)
 	
 	to_save = (t,dateFormed,avgBand,minBand,maxBand,medBand,avgRTT,minRTT,maxRTT,medRTT)+test
 	return to_save
