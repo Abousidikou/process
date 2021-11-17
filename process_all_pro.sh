@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## Specify ndt7 datadir path
-path="/home/emery/ndt/ndt-server/datadir/ndt7" ## Specify ndt7 Path
+path="/home/emes/ndt/ndt-server/datadir/ndt7" ## Specify ndt7 Path
 todayYear=`date +%Y`
 todayMonth=`date +%m`
 todayDay=`date +%d`
