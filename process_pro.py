@@ -418,7 +418,8 @@ def ip_data(obj):
 
 
 def web_fetch(response):
-	if response.status_code != 204 and response.headers["content-type"].strip().startswith("application/json"):
+	##and response.headers["Content-Type"].strip().startswith("application/json")
+	if response.status_code != 204:
 	    try:
 	        return response.json()
 	    except ValueError:
@@ -773,6 +774,12 @@ print("url:",url)
 # my_ip_data = json.loads(m_bin.decode('utf8'))
 response = requests.get(url)
 # my_ip_data = ip_data(response.json())
+print("Response Header:",response.headers)
+print("Response Content type:",response.headers["Content-Type"])
+print("Response status_code: ",response.status_code)
+print("Response Encoding:",response.encoding)
+print("Response content:",response.content)
+
 my_ip_data = web_fetch(response)
 
 print("my_ip_data:",my_ip_data)
