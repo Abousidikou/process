@@ -416,6 +416,14 @@ def ip_data(obj):
     jsonconverted = json.loads(text)
     return jsonconverted
 
+
+def web_fetch(url):
+	if response.status_code != 204 and response.headers["content-type"].strip().startswith("application/json"):
+	    try:
+	        return response.json()
+	    except ValueError:
+	        # decide how to handle a server that's misbehaving to this extent
+	    	print("Error while getting json data. Response Status code: ",response.status_code)    
 ########################  Initail Setup
 def setup():
 	## Country
@@ -750,6 +758,7 @@ for i in Frame_Test[0]['TCPInfo']:
 for p in TCP_Useless_Params:
 	TCP_Params.remove(p)
 
+
 print("Data getted...")
 ############################   2nd Phase Process insertion
 
@@ -762,10 +771,11 @@ print("url:",url)
 # m_bin = response.data
 # print("m_bin:",m_bin)
 # my_ip_data = json.loads(m_bin.decode('utf8'))
-response = requests.get(url)
-my_ip_data = ip_data(response.json())
-print("my_ip_data:",my_ip_data)
+# response = requests.get(url)
+# my_ip_data = ip_data(response.json())
+my_ip_data = web_fetch(url)
 
+print("my_ip_data:",my_ip_data)
 asSplitted = my_ip_data['as'].split()
 asnum = asSplitted[0]
 asname = my_ip_data['as'][len(asnum)+1:]
