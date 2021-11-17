@@ -329,50 +329,6 @@ CREATE TABLE IF NOT EXISTS `monitorDB`.`Tests` (
 ENGINE = InnoDB;
 
 
--- -----------------------------------------------------
--- Table `monitorDB`.`DayStat`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `monitorDB`.`DayStat` (
-  `DayStat_id` INT NOT NULL AUTO_INCREMENT,
-  `DayStat_Type` VARCHAR(45) NULL,
-  `DayStat_Date` DATE NULL,
-  `DayStat_AvgBW` INT NULL,
-  `DayStat_MinBW` INT NULL,
-  `DayStat_MaxBW` INT NULL,
-  `DayStat_MedianBW` INT NULL,
-  `DayStat_AvgMinRTT` INT NULL,
-  `DayStat_MinMinRTT` INT NULL,
-  `DayStat_MaxMinRTT` INT NULL,
-  `DayStat_MedianMinRTT` INT NULL,
-  `DayStat_Down_Number` INT NULL,
-  `DayStat_Up_Number` INT NULL,
-  `DayStat_Total` INT NULL,
-  PRIMARY KEY (`DayStat_id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `monitorDB`.`InterDayStat`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `monitorDB`.`InterDayStat` (
-  `Inter_DayStat_id` INT NOT NULL AUTO_INCREMENT,
-  `Inter_DayStat_Type` VARCHAR(45) NULL,
-  `Inter_DayStat_Date` DATE NULL,
-  `Inter_DayStat_AvgBW` INT NULL,
-  `Inter_DayStat_MinBW` INT NULL,
-  `Inter_DayStat_MaxBW` INT NULL,
-  `Inter_DayStat_MedianBW` INT NULL,
-  `Inter_DayStat_AvgMinRTT` INT NULL,
-  `Inter_DayStat_MinMinRTT` INT NULL,
-  `Inter_DayStat_MaxMinRTT` INT NULL,
-  `Inter_DayStat_MedianMinRTT` INT NULL,
-  `Inter_DayStat_Down_Number` INT NULL,
-  `Inter_DayStat_Up_Number` INT NULL,
-  `Inter_DayStat_Total` INT NULL,
-  PRIMARY KEY (`Inter_DayStat_id`))
-ENGINE = InnoDB;
-
-
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

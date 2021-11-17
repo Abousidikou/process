@@ -101,7 +101,7 @@ else
 	## Start getting Data
 
 	if [[ $1 == "report" ]]; then
-		echo  "Daily push into database..." | tee --append $log_file
+		echo  "Extraction into database..." | tee --append $log_file
 		for file in `ls $wdr`;
 		do
 			if [[ $file != "zip" ]]; then
@@ -110,14 +110,7 @@ else
 				echo "Processing of  $file finished" | tee --append $log_file
 			fi
 		done
-		# dayly Statistic
-		echo "Daily stat... " | tee --append $log_file
-		if [[ $# == 2 ]]; then
-			python3 process_pro.py "dayStat" $year $month $2
-		else
-			python3 process_pro.py "dayStat" $year $month $day
-		fi 
-		echo "Daily stat finished" | tee --append $log_file
+
 	fi
 
 

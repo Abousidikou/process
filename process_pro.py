@@ -273,45 +273,6 @@ def insert_into_Test(test):
 	        print("MySQL connection is closed")
 
 
-##Change DayStat_ by DayStat_Date
-def insert_into_DayStat(dayStat):
-	try:
-	    connection = Connect()
-	    if connection.is_connected():
-	        cursor = connection.cursor()
-	        sql_insert_blob_query = """ INSERT INTO DayStat
-	                           (DayStat_Type,DayStat_Date,DayStat_AvgBW,DayStat_MinBW,DayStat_MaxBW,DayStat_MedianBW,DayStat_AvgMinRTT,DayStat_MinMinRTT,DayStat_MaxMinRTT,DayStat_MedianMinRTT,DayStat_Down_Number,DayStat_Up_Number,DayStat_Total) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) """
-	        cursor.execute(sql_insert_blob_query,dayStat)
-	        connection.commit()
-	        print("DayStat  Inserted: ", cursor.rowcount)
-
-	except Error as e:
-	    print("Error while connecting to MySQL: ", e)
-	finally:
-	    if connection.is_connected():
-	        cursor.close()
-	        connection.close()
-	        print("MySQL connection is closed")
-
-##Change
-def insert_into_inter_DayStat(dayStat):
-	try:
-	    connection = Connect()
-	    if connection.is_connected():
-	        cursor = connection.cursor()
-	        sql_insert_blob_query = """ INSERT INTO InterDayStat
-	                           (inter_DayStat_Type,inter_DayStat_Date,inter_DayStat_AvgBW,inter_DayStat_MinBW,inter_DayStat_MaxBW,inter_DayStat_MedianBW,inter_DayStat_AvgMinRTT,inter_DayStat_MinMinRTT,inter_DayStat_MaxMinRTT,inter_DayStat_MedianMinRTT,inter_DayStat_Down_Number,inter_DayStat_Up_Number,inter_DayStat_Total) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) """
-	        cursor.execute(sql_insert_blob_query,dayStat)
-	        connection.commit()
-	        print("InterDayStat  Inserted: ", cursor.rowcount)
-
-	except Error as e:
-	    print("Error while connecting to MySQL: ", e)
-	finally:
-	    if connection.is_connected():
-	        cursor.close()
-	        connection.close()
-	        print("MySQL connection is closed")
 
 
 ###################  Existence
@@ -436,7 +397,7 @@ def get_service_level(bw):
 	service = ['0-3','3-5','5-10','10-15','15-25','25-50','50-100','100-1000']
 	for levelStr in service:
 		l=levelStr.split('-')
-		if w > float(l[0]) and w <= float(l[1]):
+		if w >= float(l[0]) and w < float(l[1]):
 			return levelStr
 
 
@@ -447,95 +408,6 @@ def get_level_DaySlice(hour):
 		if int(hour) >= int(l[0]) and int(hour) < int(l[1]):
 			return h
 
-##Change
-def get_Day_Test_Number(dateFormed,loc):
-	d = str(dateFormed)
-	record = None
-	d_num = 0
-	u_num = 0
-	try:
-	    connection = Connect()
-	    if connection.is_connected():
-	        cursor = connection.cursor()
-	        if loc == "national":
-	        	sql_insert_blob_query = """ SELECT * FROM Tests where Test_Date='"""+d+"""' and Test_Country_id='59' """
-	        else:
-	        	sql_insert_blob_query = """ SELECT * FROM Tests where Test_Date='"""+d+"""' and Test_Country_id!='59' """
-	        
-	        cursor.execute(sql_insert_blob_query)
-	        record = cursor.fetchall()
-	        print("Total number of rows in table: ", cursor.rowcount)
-	        for row in record:
-	        	if row[2] == 'Download':
-	        		d_num += 1
-	        	else:
-	        		u_num += 1
-
-	except Error as e:
-	    print("Error while connecting to MySQL: ", e)
-	finally:
-	    if connection.is_connected():
-	        cursor.close()
-	        connection.close()
-	        print("MySQL connection is closed")
-	        return (d_num,u_num,d_num+u_num)
-
-##Change 
-def get_day_Record(record,t,loc):
-	if len(record) == 0:
-		return None
-	b = []
-	r = []
-	avgBand = 0.0
-	avgRTT = 0.0
-	totalBW = 0.0
-	totalRTT = 0.0
-	for row in record:
-		b.append(float(row[1]))
-		totalBW += float(row[1])
-		r.append(float(row[5]))
-		totalRTT += float(row[5])
-	avgBand = totalBW/len(record)
-	avgRTT = totalRTT/len(record)
-	minBand,maxBand,medBand = MinMaxMedian(b)
-	minRTT,maxRTT,medRTT = MinMaxMedian(r)
-	
-	dateFormed = date(int(sys.argv[2]),int(sys.argv[3]),int(sys.argv[4])).strftime("%Y-%m-%d")
-	test = get_Day_Test_Number(dateFormed,loc)
-	print("Test:",test)
-	
-	to_save = (t,dateFormed,avgBand,minBand,maxBand,medBand,avgRTT,minRTT,maxRTT,medRTT)+test
-	return to_save
-
-##Change
-def get_BBRInfo_id_from_Day_Tests(d,t,typ):
-	day = str(d)
-	print(day)
-	record = None
-	d_num = 0
-	u_num = 0
-	try:
-	    connection = Connect()
-	    if connection.is_connected():
-	        cursor = connection.cursor()
-	        sql_insert_blob_query = ""
-	        if typ == 'national':
-	        	sql_insert_blob_query = """ SELECT Test_BBRInfo_id FROM Tests where Test_Date='"""+day+"""' and Test_Type='"""+t+"""' and Test_Country_id='59' """
-	        else:
-	        	sql_insert_blob_query = """ SELECT Test_BBRInfo_id FROM Tests where Test_Date='"""+day+"""' and Test_Type='"""+t+"""' and Test_Country_id!='59' """
-	        
-	        print(sql_insert_blob_query)
-	        cursor.execute(sql_insert_blob_query)
-	        record = cursor.fetchall()
-	        print("Total number of rows in table: ", cursor.rowcount)
-	except Error as e:
-	    print("Error while connecting to MySQL: ", e)
-	finally:
-	    if connection.is_connected():
-	        cursor.close()
-	        connection.close()
-	        print("MySQL connection is closed")
-	        return record
 
 
 ########################  Initail Setup
@@ -837,87 +709,6 @@ if option == "setup":
 	exit()
 
 
-####### Dayly Stat Configuration
-
-if option == "dayStat":
-	print("Start Recording This days's("+sys.argv[4]+") test...")
-	today = date(int(sys.argv[2]),int(sys.argv[3]),int(sys.argv[4])).strftime("%Y-%m-%d")
-	print(today)
-	dayDownTest = get_BBRInfo_id_from_Day_Tests(today,"Download","national")
-	dayUpTest = get_BBRInfo_id_from_Day_Tests(today,"Upload","national")
-	print(dayDownTest,dayUpTest)
-	if dayDownTest == None or dayUpTest == None:
-		sys.exit()
-	record = []
-	for t in dayDownTest:
-		s = get_all_where('BBRInfo','BBRInfo_id',int(t[0]))
-		record.append(s)
-	if record == []:
-		sys.exit()
-	print("Record:",record)
-	dayRecord = get_day_Record(record,"Download","national")
-	print("DayRecord: ",dayRecord)
-	if dayRecord == None:
-		sys.exit()
-	print("Start Insertion of Daily Record.")
-	insert_into_DayStat(dayRecord)
-	print("End of Insertion of Daily Record.")
-	record = []
-	for t in dayUpTest:
-		s = get_all_where('BBRInfo','BBRInfo_id',int(t[0]))
-		record.append(s)
-	if record == []:
-		sys.exit()
-	print("Record:",record)
-	dayRecord = get_day_Record(record,"Upload","national")
-	print("DayRecord: ",dayRecord)
-	if dayRecord == None:
-		sys.exit()
-	print("Start Insertion of Daily Record.")
-	insert_into_DayStat(dayRecord)
-	print("End of Insertion of Daily Record.")
-	print("\n")
-
-	## Intertnational DayStat
-	print("Start International insertion...")
-	dayDownTest = get_BBRInfo_id_from_Day_Tests(today,"Download","international")
-	dayUpTest = get_BBRInfo_id_from_Day_Tests(today,"Upload","international")
-	if dayDownTest == None or dayUpTest == None:
-		sys.exit()
-	record = []
-	for t in dayDownTest:
-		s = get_all_where('BBRInfo','BBRInfo_id',int(t[0]))
-		record.append(s)
-	if record == []:
-		sys.exit()
-	dayRecord = get_day_Record(record,"Download","international")
-	print("DayRecord: ",dayRecord)
-	if dayRecord == None:
-		sys.exit()
-	print("Start Insertion of International Daily Record.")
-	insert_into_inter_DayStat(dayRecord)
-	print("End of Insertion of International Daily Record.")
-	record = []
-	for t in dayUpTest:
-		s = get_all_where('BBRInfo','BBRInfo_id',int(t[0]))
-		record.append(s)
-	if record == []:
-		sys.exit()
-	dayRecord = get_day_Record(record,"Upload","international")
-	print("DayRecord: ",dayRecord)
-	if dayRecord == None:
-		sys.exit()
-	print("Start Insertion of International Daily Record.")
-	insert_into_inter_DayStat(dayRecord)
-	print("End of Insertion of International Daily Record.")
-	sys.exit()
-	print("\n")
-	print("\n")
-	print("\n")
-	print("\n")
-
-
-
 
 ####### Test Data processing
 
@@ -1101,9 +892,13 @@ record = (UUID,TestType,ServerIP,ServerPort,ClientIP,ClientPort,test_date,countr
 
 print(record)
 insert_into_Test(record)
+
 print("Test insertion ended..")
 print("End of Insertion of Test: "+UUID+" started at: "+StartTime)
-
+print("\n")
+print("\n")
+print("\n")
+print("\n")
 ######### close log
 sys.stdout = orig_stdout
 process.close()
