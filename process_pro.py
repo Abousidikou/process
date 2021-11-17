@@ -773,9 +773,10 @@ print("url:",url)
 # print("m_bin:",m_bin)
 # my_ip_data = json.loads(m_bin.decode('utf8'))
 response = requests.get(url)
-# my_ip_data = ip_data(response.json())
-print("Response Header:",response.headers)
-print("Response Content type:",response.headers["Content-Type"])
+if response.headers["X-Rl"] == '0' :
+	while response.headers["X-Ttl"] != '0':
+		print(response.headers["X-Ttl"])
+	response = requests.get(url)	
 print("Response status_code: ",response.status_code)
 print("Response Encoding:",response.encoding)
 print("Response content:",response.content)
