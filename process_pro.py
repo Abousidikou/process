@@ -417,7 +417,7 @@ def ip_data(obj):
     return jsonconverted
 
 
-def web_fetch(url):
+def web_fetch(response):
 	if response.status_code != 204 and response.headers["content-type"].strip().startswith("application/json"):
 	    try:
 	        return response.json()
@@ -771,9 +771,9 @@ print("url:",url)
 # m_bin = response.data
 # print("m_bin:",m_bin)
 # my_ip_data = json.loads(m_bin.decode('utf8'))
-# response = requests.get(url)
+response = requests.get(url)
 # my_ip_data = ip_data(response.json())
-my_ip_data = web_fetch(url)
+my_ip_data = web_fetch(response)
 
 print("my_ip_data:",my_ip_data)
 asSplitted = my_ip_data['as'].split()
