@@ -3,7 +3,7 @@
 
 
 import sys,json, mysql.connector,re
-import urllib3 
+import urllib3, requests
 from mysql.connector import Error
 from datetime import datetime, timedelta, date ##Change add Date
 from os import listdir
@@ -409,6 +409,12 @@ def get_level_DaySlice(hour):
 			return h
 
 
+def ip_data(obj):
+    # create a formatted string of the Python JSON object
+    text = json.dumps(obj, sort_keys=True, indent=4)
+    print(text)
+    jsonconverted = json.loads(text)
+    return jsonconverted
 
 ########################  Initail Setup
 def setup():
@@ -751,11 +757,13 @@ print("Data getted...")
 print("Provider Process-Searching about IPInfo...")
 url = 'http://ip-api.com/json/'+ClientIP
 print("url:",url)
-http = urllib3.PoolManager()
-response = http.request('GET',url)
-m_bin = response.data
-print("m_bin:",m_bin)
-my_ip_data = json.loads(m_bin.decode('utf8'))
+# http = urllib3.PoolManager()
+# response = http.request('GET',url)
+# m_bin = response.data
+# print("m_bin:",m_bin)
+# my_ip_data = json.loads(m_bin.decode('utf8'))
+response = requests.get(url)
+my_ip_data = ip_data(response.json())
 print("my_ip_data:",my_ip_data)
 
 asSplitted = my_ip_data['as'].split()
