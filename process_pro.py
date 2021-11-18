@@ -3,12 +3,12 @@
 
 
 import sys,json, mysql.connector,re
-import urllib3, requests, time
+import urllib3, requests
 from mysql.connector import Error
 from datetime import datetime, timedelta, date ##Change add Date
 from os import listdir
 from os.path import isfile, join
-
+from time import sleep
 
 print("Starting...")
 ## Preparing redirection
@@ -777,7 +777,7 @@ print("Response headers: ",response.headers)
 if response.headers["X-Rl"] == '0' :
 	print("Rl: ",response.headers["X-Rl"])
 	print("Waiting for ",int(response.headers["X-Ttl"]),"s")
-	time.sleep(int(tmp_resp.headers["X-Ttl"])+2)
+	sleep(int(tmp_resp.headers["X-Ttl"])+2)
 	response = requests.get(url)	
 print("Response status_code: ",response.status_code)
 print("Response Encoding:",response.encoding)
