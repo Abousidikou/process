@@ -775,7 +775,7 @@ print("url:",url)
 response = requests.get(url)
 print("Response headers: ",response.headers)
 if response.headers["X-Rl"] == '0' :
-	print("Rl: "response.headers["X-Rl"])
+	print("Rl: ",response.headers["X-Rl"])
 	print("Waiting for ",int(response.headers["X-Ttl"]),"s")
 	sleep(int(tmp_resp.headers["X-Ttl"])+2)
 	response = requests.get(url)	
