@@ -3,7 +3,7 @@
 
 
 import sys,json, mysql.connector,re
-import urllib3, requests
+import urllib3, requests,time
 from mysql.connector import Error
 from datetime import datetime, timedelta, date ##Change add Date
 from os import listdir
