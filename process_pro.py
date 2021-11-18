@@ -773,18 +773,17 @@ print("url:",url)
 # print("m_bin:",m_bin)
 # my_ip_data = json.loads(m_bin.decode('utf8'))
 response = requests.get(url)
+print("Response headers: ",response.headers)
 if response.headers["X-Rl"] == '0' :
-	tmp_resp = requests.get(url)
-	while tmp_resp.headers["X-Ttl"] != '0':
-		tmp_resp = requests.get(url)
-		print("",tmp_resp.headers["X-Ttl"])
+	print("Rl: "response.headers["X-Rl"])
+	print("Waiting for ",int(response.headers["X-Ttl"]),"s")
+	sleep(int(tmp_resp.headers["X-Ttl"])+2)
 	response = requests.get(url)	
 print("Response status_code: ",response.status_code)
 print("Response Encoding:",response.encoding)
 print("Response content:",response.content)
 
 my_ip_data = web_fetch(response)
-
 print("my_ip_data:",my_ip_data)
 asSplitted = my_ip_data['as'].split()
 asnum = asSplitted[0]
