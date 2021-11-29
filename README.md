@@ -28,9 +28,10 @@ Edit cron file
 crontab -e	
 ```
 Add on top of crontab file path to record to database every 1AM:
+Replace `&path` by the absolute path to process_pro.sh
 ```bash
 PATH=/usr/bin:/usr:/home/"path to script_ndt_auto_report file"
-0 1 * * * process_pro.sh "report" 
+0 1 * * * "&path"/process_pro.sh "report" 
 ```
 
 ## Save all
