@@ -1,4 +1,5 @@
 # script_ndt_auto_report
+This scripts are used to auto copy ndt test data into mysql database
 
 ## Clone the repository
 ```bash
@@ -10,6 +11,8 @@ Replace every line in process_pro.sh, process_pro.py and process_all_pro.sh  by 
 
 
 ## Set Database in mysql
+
+Install mysql by visiting [this website](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-20-04)
 
 Make sure the database is already created 
 ```bash
