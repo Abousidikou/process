@@ -17,6 +17,11 @@ process = open('/home/emes/ndt/script_ndt_auto_report/Insertion.log.txt', 'a')  
 sys.stdout = process
 
 
+connection = mysql.connector.connect(host='localhost', ## Change Credential
+									database='monitorDB',
+									user='emes',
+									password='Emes@Mysql2022',
+									auth_plugin='mysql_native_password')
 
 ############################################################ Functions
 #################### Compute Functions
@@ -99,17 +104,9 @@ def mysq_version():
     print("Connected to MySQL Server version ", db_Info)
 
 
-def Connect():
-	connection = mysql.connector.connect(host='localhost', ## Change Credential
-										database='monitorDB',
-										user='root',
-										password='Emes@@2021')
-	return connection
-
-
 def insert_into_tcp_bbr_info(table,paramTCP,record,id_test):
 	try:
-	    connection = Connect()
+	    global connection
 	    if connection.is_connected():
 	        cursor = connection.cursor()
 	        if id_test == None:
@@ -129,12 +126,11 @@ def insert_into_tcp_bbr_info(table,paramTCP,record,id_test):
 	finally:
 	    if connection.is_connected():
 	        cursor.close()
-	        connection.close()
 	        print("MySQL connection is closed")
 
 def insert_into_Provider(provider):
 	try:
-	    connection = Connect()
+	    global connection
 	    if connection.is_connected():
 	        cursor = connection.cursor()
 	        sql_insert_blob_query = """ INSERT INTO Provider
@@ -148,7 +144,6 @@ def insert_into_Provider(provider):
 	finally:
 	    if connection.is_connected():
 	        cursor.close()
-	        connection.close()
 	        print("MySQL connection is closed")
 
 
@@ -156,7 +151,7 @@ def insert_into_Provider(provider):
 
 def insert_into_City(city):
 	try:
-	    connection = Connect()
+	    global connection
 	    if connection.is_connected():
 	        cursor = connection.cursor()
 	        sql_insert_blob_query = """ INSERT INTO City
@@ -169,13 +164,12 @@ def insert_into_City(city):
 	finally:
 	    if connection.is_connected():
 	        cursor.close()
-	        connection.close()
 	        print("MySQL connection is closed")
 
 
 def insert_into_Region(region):
 	try:
-	    connection = Connect()
+	    global connection
 	    if connection.is_connected():
 	        cursor = connection.cursor()
 	        sql_insert_blob_query = """ INSERT INTO Region
@@ -189,13 +183,13 @@ def insert_into_Region(region):
 	finally:
 	    if connection.is_connected():
 	        cursor.close()
-	        connection.close()
 	        print("MySQL connection is closed")	
 
 
 def insert_into_Country(country):
+	print("Inserting countries")
 	try:
-	    connection = Connect()
+	    global connection
 	    if connection.is_connected():
 	        cursor = connection.cursor()
 	        sql_insert_blob_query = """ INSERT INTO Country
@@ -209,14 +203,13 @@ def insert_into_Country(country):
 	finally:
 	    if connection.is_connected():
 	        cursor.close()
-	        connection.close()
 	        print("MySQL connection is closed")
 
 
 
 def insert_into_Service(service):
 	try:
-	    connection = Connect()
+	    global connection
 	    if connection.is_connected():
 	        cursor = connection.cursor()
 	        sql_insert_blob_query = """ INSERT INTO Service
@@ -230,12 +223,11 @@ def insert_into_Service(service):
 	finally:
 	    if connection.is_connected():
 	        cursor.close()
-	        connection.close()
 	        print("MySQL connection is closed")
 
 def insert_into_DaySlice(daySlice):
 	try:
-	    connection = Connect()
+	    global connection
 	    if connection.is_connected():
 	        cursor = connection.cursor()
 	        sql_insert_blob_query = """ INSERT INTO DaySlice
@@ -249,13 +241,12 @@ def insert_into_DaySlice(daySlice):
 	finally:
 	    if connection.is_connected():
 	        cursor.close()
-	        connection.close()
 	        print("MySQL connection is closed")
 
 ##Change Test_Year,Test_Month,Test_Day Test_Date
 def insert_into_Test(test):
 	try:
-	    connection = Connect()
+	    global connection
 	    if connection.is_connected():
 	        cursor = connection.cursor()
 	        sql_insert_blob_query = """ INSERT INTO Tests
@@ -269,7 +260,6 @@ def insert_into_Test(test):
 	finally:
 	    if connection.is_connected():
 	        cursor.close()
-	        connection.close()
 	        print("MySQL connection is closed")
 
 
@@ -280,7 +270,7 @@ def insert_into_Test(test):
 def isProvider_Exist(asn):
 	exist = None
 	try:
-	    connection = Connect()
+	    global connection
 	    if connection.is_connected():
 	        cursor = connection.cursor()
 	        sql_insert_blob_query = """ SELECT Provider_id FROM Provider WHERE Provider_AS_Number='"""+asn+"""' """
@@ -291,7 +281,6 @@ def isProvider_Exist(asn):
 	finally:
 	    if connection.is_connected():
 	        cursor.close()
-	        connection.close()
 	        print("MySQL connection is closed")
 	        if exist == None:
 	        	return
@@ -307,7 +296,7 @@ def get_id_from_table(table1,paramName,param):
 	if param == None:
 		return
 	try:
-	    connection = Connect()
+	    global connection
 	    if connection.is_connected():
 	        cursor = connection.cursor()
 	        sql_insert_blob_query = """ SELECT """+table1+"""_id FROM """+table1+""" WHERE """+paramName+"""='"""+param+"""' """
@@ -319,7 +308,6 @@ def get_id_from_table(table1,paramName,param):
 	finally:
 	    if connection.is_connected():
 	        cursor.close()
-	        connection.close()
 	        print("MySQL connection is closed")
 	        if id_need == None:
 	        	return
@@ -330,7 +318,7 @@ def get_id_from_table(table1,paramName,param):
 def getLastIndex(table):
 	id_need = None
 	try:
-	    connection = Connect()
+	    global connection
 	    if connection.is_connected():
 	        cursor = connection.cursor()
 	        sql_insert_blob_query = """ SELECT * FROM """+table+"""
@@ -342,7 +330,6 @@ def getLastIndex(table):
 	finally:
 	    if connection.is_connected():
 	        cursor.close()
-	        connection.close()
 	        print("MySQL connection is closed")
 	        if id_need == None:
 	        	return None
@@ -352,7 +339,7 @@ def getLastIndex(table):
 def get_all(table):
 	record = None
 	try:
-	    connection = Connect()
+	    global connection
 	    if connection.is_connected():
 	        cursor = connection.cursor()
 	        sql_insert_blob_query = """ SELECT * FROM """+table+""" """
@@ -364,7 +351,6 @@ def get_all(table):
 	finally:
 	    if connection.is_connected():
 	        cursor.close()
-	        connection.close()
 	        print("MySQL connection is closed")
 	        return record
 
@@ -373,7 +359,7 @@ def get_all_where(table,t,v):
 	val = str(v)
 	record = None
 	try:
-	    connection = Connect()
+	    global connection
 	    if connection.is_connected():
 	        cursor = connection.cursor()
 	        sql_insert_blob_query = """ SELECT * FROM """+table+""" where """+t+"""='"""+val+"""' """
@@ -386,7 +372,6 @@ def get_all_where(table,t,v):
 	finally:
 	    if connection.is_connected():
 	        cursor.close()
-	        connection.close()
 	        print("MySQL connection is closed")
 	        return record
 
@@ -929,6 +914,7 @@ print("\n")
 ######### close log
 sys.stdout = orig_stdout
 process.close()
+connection.close()
 
 
 
