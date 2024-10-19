@@ -100,20 +100,44 @@ else
 
 	## Start getting Data
 
+#	if [[ $1 == "report" ]]; then
+#		echo  "Extraction into database..." | tee --append $log_file
+#		for file in `ls $wdr`;
+#		do
+#			if [[ $file != "zip" ]]; then
+#				echo  "Processing  $file " | tee --append $log_file
+#				python3 process_pro.py $wdr$file
+#				echo "Processing of  $file finished" | tee --append $log_file
+#			fi
+#		done
+
+#	fi
+
+ 
+	## Start getting Data update to check emes and monitor before
+	
 	if [[ $1 == "report" ]]; then
-		echo  "Extraction into database..." | tee --append $log_file
-		for file in `ls $wdr`;
-		do
-			if [[ $file != "zip" ]]; then
+    # Verify that "monitor.uac.bj" and "mail.emes.bj" existing
+    monitor_files=$(find "$path" -type f -name '*monitor.uac.bj*')
+    mail_files=$(find "$path" -type f -name '*mail.emes.bj*')
+
+		if [[ -z "$monitor_files" || -z "$mail_files" ]]; then 
+		    echo "Required noth 'monitor.uac.bj' and 'mail.emes.bj' files in $path. Stop processing." | tee --append $log_file
+		    exit
+		    
+		else
+
+			echo "Files are checked. Treating..."
+
+			# Boucle de traitement des fichiers
+			for file in `ls $wdr`;
+			do
 				echo  "Processing  $file " | tee --append $log_file
 				python3 process_pro.py $wdr$file
-				echo "Processing of  $file finished" | tee --append $log_file
-			fi
-		done
-
+			done
+		
+		fi
 	fi
-
-
 
 
 	## sleep 5
